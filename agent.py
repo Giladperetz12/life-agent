@@ -1,51 +1,38 @@
-import json
-from pathlib import Path
+from mail_agent import load_mails, count_unread_mails, count_important_mails
+from actions import show_mail_summary, show_important_mails, idle
 
 
-def load_malis():
-    path = Path("data/mails.json")
-    with path.open("r", encoding="utf-8") as f:
-        mails = json.load(f)
-    return mails
-
-
-def count_unread_mails(mails):
-    unread_count = 0
-    for mail in mails:
-        if not mail.get("is_read", False):
-            unread_count += 1
-    return unread_count
-
-
-def decide_action(unread_count):
+def decide_action(unread_count,important_count):
+    if important_count > 0:
+        return "SHOW_IMPORTANT_MAILS"
     if unread_count > 0:
         return "SHOW_MAIL_SUMMARY"
-    else:
-        return "IDLE"
+    return "IDLE"
 
-
-def show_mails_summary(mails):
-    print("Daily mail summary:")
-    for mail in mails:
-        status = "UNREAD" if not mail.get("is_read", False) else "READ"
-        print(f"- {mail.get('subject', 'No subject')} [{status}]")
 
 def act(action, mails):
-    if action == "SHOW_MAIL_SUMMARY":
-        show_mails_summary(mails)
+    if action == "SHOW_IMPORTANT_MAILS":
+        show_important_mails(mails)
+    elif action == "SHOW_MAIL_SUMMARY":
+        show_mail_summary(mails)
     elif action == "IDLE":
-        print("No action needed")
+        idle()
 
 
 def main():
-    malis = load_malis()
-    unred_count = count_unread_mails(malis)
-    action = decide_action(unred_count)
-    print(f"Unread mails : {unred_count}")
-    print(f"Agent decision : {action}")
+    mails = load_mails()
+    unread_count = count_unread_mails(mails)
+    important_count = count_important_mails(mails)
+
+    action = decide_action(unread_count,important_count)
+
+    print(f"Unread mails: {unread_count}")
+    print(f"Important mails: {important_count}")
+    print(f"Agent decision: {action}")
     print()
-    act(action, malis)
+
+    act(action, mails)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
