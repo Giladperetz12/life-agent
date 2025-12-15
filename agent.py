@@ -9,10 +9,28 @@ def load_malis():
     return mails
 
 
+def count_unread_mails(mails):
+    unread_count = 0
+    for mail in mails:
+        if not mail.get("is_read", False):
+            unread_count += 1
+    return unread_count
+
+
+def decide_action(unread_count):
+    if unread_count > 0:
+        return "SHOW_MAIL_SUMMARY"
+    else:
+        return "IDLE"
+
+
 def main():
     malis = load_malis()
-    print("Loaded malis:")
-    print(malis)
+    unred_count = count_unread_mails(malis)
+    action = decide_action(unred_count)
+
+    print(f"Unread mails : {unred_count}")
+    print(f"Agent decision : {action}")
 
 
 if __name__ == '__main__':
