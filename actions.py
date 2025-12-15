@@ -16,3 +16,9 @@ def show_important_mails(mails):
 
 def idle():
     print("No action needed. Agent is idle.")
+
+
+def show_calendar_conflicts(conflicts):
+    print("📅 Calendar Conflicts Detected")
+    for e1, e2 in conflicts:
+        print(f"- '{e1['title']}' overlaps with '{e2['title']}'")
