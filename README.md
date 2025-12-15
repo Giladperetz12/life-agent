@@ -19,9 +19,9 @@ The agent:
 --
 
 ## Core Features
-Mail Agent : loads emails data from a JSON file, count unread and important emails, prioritizes important emails over regular unread emails, display summaries accordignly
-Calendar Agent : loads calendar events from a JSON file, detects overlapping events (conflicts), gives calendar conflicts top priority in agent decisions
-Periodic Agent Loop : runs automatically every fixed interval (configurable), executes the full agent cycle repeatedly, can be stopped gracefully by the user
+- Mail Agent : loads emails data from a JSON file, count unread and important emails, prioritizes important emails over regular unread emails, display summaries accordignly
+- Calendar Agent : loads calendar events from a JSON file, detects overlapping events (conflicts), gives calendar conflicts top priority in agent decisions
+- Periodic Agent Loop : runs automatically every fixed interval (configurable), executes the full agent cycle repeatedly, can be stopped gracefully by the user
 
 ## Agent Decision Logic : Priority Order
 1. Calendar conflicts detected → show calendar conflicts
